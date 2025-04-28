@@ -1,0 +1,23 @@
+# Telegram Bot Configuration
+TELEGRAM_TOKEN=your_telegram_token_here
+ALLOWED_USERS=123456789,987654321  # Comma-separated list of Telegram IDs
+
+# AWS Configuration
+AWS_ACCESS_KEY_ID=your_aws_access_key
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+AWS_REGION=us-east-1
+
+# DynamoDB Configuration
+DYNAMODB_TABLE=BoxBotTable
+DYNAMODB_ENDPOINT=http://localhost:8000  # For local development
+
+# App Configuration
+LOG_LEVEL=INFO  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+MAX_ITEMS_PER_USER=1000
+MAX_STORAGE_LOCATIONS_PER_USER=100
+
+# Deployment Mode
+DEPLOYMENT_MODE=development  # development or production
+
+# Webhook Configuration (for production mode)
+WEBHOOK_URL=https://your-api-gateway-url/prod/webhook 

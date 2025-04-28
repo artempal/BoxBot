@@ -1,0 +1,6 @@
+python-telegram-bot==21.11.1
+boto3==1.38.3
+pydantic==2.11.3
+python-dotenv==1.1.0
+python-levenshtein==0.27.1
+pytz==2025.2
