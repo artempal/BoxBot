@@ -29,33 +29,13 @@ BoxBot - это Telegram бот, который помогает пользов�
 - AWS API Gateway
 - Docker (для локальной разработки)
 
-## Структура проекта
-
-```
-BoxBot/
-├── boxbot/                  # Основной пакет приложения
-│   ├── bot/                 # Обработчики команд и логика бота
-│   ├── config/              # Конфигурационные модули
-│   ├── db/                  # Работа с базой данных
-│   ├── lambda/              # AWS Lambda интеграция
-│   ├── tests/               # Модульные тесты
-│   ├── utils/               # Вспомогательные утилиты
-│   ├── requirements.txt     # Зависимости проекта
-│   └── env_example          # Пример конфигурационного файла .env
-├── scripts/                 # Скрипты для разработки и деплоя
-│   ├── run_local.py         # Запуск бота локально
-│   └── setup_dynamodb_local.py # Настройка локальной DynamoDB
-├── Makefile                 # Make команды для удобной работы
-└── README.md                # Документация проекта
-```
 
 ## Настройка окружения разработки
 
 ### Предварительные требования
 
 - Python 3.9+
-- Docker
-- AWS CLI (для деплоя)
+- Docker или NoSQL Worckbench with local Dynamodb (для локальной разработки)
 
 ### Установка и запуск
 
@@ -73,7 +53,7 @@ BoxBot/
 
 3. Установить зависимости:
    ```
-   make setup
+   pip install -r boxbot/requirements.txt
    ```
 
 4. Создать файл `.env` на основе `boxbot/env_example` и заполнить его:
@@ -83,43 +63,17 @@ BoxBot/
 
 5. Запустить локальную DynamoDB:
    ```
-   make setup-local
+   python scripts/setup_dynamodb_local.py
    ```
 
 6. Запустить бота в режиме разработки:
    ```
-   make run
+   python scripts/run_local.py
    ```
 
 ## Настройка для продакшена
 
-### Деплой на AWS Lambda
-
-1. Настроить AWS CLI:
-   ```
-   aws configure
-   ```
-
-2. Создать Lambda функцию, таблицу DynamoDB и настроить API Gateway с помощью AWS Management Console или AWS CDK/CloudFormation.
-
-3. Обновить `.env` файл с продакшен-настройками.
-
-4. Собрать и загрузить пакет в Lambda:
-   ```
-   make deploy
-   ```
-
-5. Настроить вебхук:
-   ```
-   make setup-webhook
-   ```
-
-## Тестирование
-
-Для запуска тестов выполните:
-```
-make test
-```
+Автоматизированное разворачивание в Yandex Cloud с использованием [terraform](terraform/README.md)
 
 ## Ограничения
 
@@ -131,8 +85,3 @@ make test
 
 - Доступ к боту ограничен списком разрешенных Telegram ID
 - Данные разделены по ID пользователей
-- Нельзя удалить место хранения, содержащее вещи
-
-## Лицензия
-
-Этот проект распространяется под лицензией MIT. 

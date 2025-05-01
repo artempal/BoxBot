@@ -10,8 +10,8 @@ This directory contains Terraform configuration files for deploying BoxBot on Ya
 
 ## Initial Setup
 
-Install yc cli https://yandex.cloud/ru/docs/cli/quickstart
-Install terraform https://yandex.cloud/ru/docs/tutorials/infrastructure-management/terraform-quickstart
+- Install yc cli https://yandex.cloud/ru/docs/cli/quickstart
+- Install terraform https://yandex.cloud/ru/docs/tutorials/infrastructure-management/terraform-quickstart
 
 1. First, set up the Terraform backend (Yandex Object Storage bucket):
 
@@ -36,7 +36,20 @@ cp terraform.tfvars.example terraform.tfvars
 ## Deployment
 
 1. Initialize Terraform:
-nano ~/.terraformrc
+
+vim ~/.terraformrc
+
+```
+provider_installation {
+  network_mirror {
+    url = "https://terraform-mirror.yandexcloud.net/"
+    include = ["registry.terraform.io/*/*"]
+  }
+  direct {
+    exclude = ["registry.terraform.io/*/*"]
+  }
+}
+```
 
 ```bash
 terraform init \
@@ -63,19 +76,6 @@ TELEGRAM_TOKEN=
 API_GATEWAY_URL=$(terraform output -raw api_gateway_url)
 curl -X POST https://api.telegram.org/bot$TELEGRAM_TOKEN/setWebhook -d "url=${API_GATEWAY_URL}"
 ```
-
-## GitHub Actions Deployment
-
-For GitHub Actions deployment, you need to add the following secrets to your GitHub repository:
-
-- `YC_CLOUD_ID`: Your Yandex Cloud ID
-- `YC_FOLDER_ID`: Your Yandex Cloud Folder ID
-- `YC_ACCESS_KEY_ID`: Access key for Yandex Object Storage
-- `YC_SECRET_ACCESS_KEY`: Secret key for Yandex Object Storage
-- `TELEGRAM_TOKEN`: Your Telegram bot token
-- `ALLOWED_USERS`: Comma-separated list of allowed Telegram user IDs
-
-The GitHub Actions workflow will automatically deploy your application when you push to the main branch.
 
 ## Customization
 
