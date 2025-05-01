@@ -1,0 +1,6 @@
+cloud_id            = "your-cloud-id"
+folder_id           = "your-folder-id"
+zone                = "ru-central1-a"
+telegram_token      = "your-telegram-token"
+allowed_users       = "182203182"
+function_package_path = "../dist/function.zip" 
