@@ -8,7 +8,9 @@ load_dotenv(override=True)
 
 # Telegram Bot Configuration
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
-ALLOWED_USERS = [int(user_id.strip()) for user_id in os.getenv("ALLOWED_USERS", "").split(",") if user_id.strip()]
+_allowed_users_str = os.getenv("ALLOWED_USERS", "")
+ALLOWED_USERS_RAW = [user_id.strip().lower() for user_id in _allowed_users_str.split(",") if user_id.strip()]
+ALLOWED_USERS = [int(user_id) for user_id in ALLOWED_USERS_RAW if user_id.isdigit()]
 
 # AWS Configuration
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
@@ -43,4 +45,6 @@ logging.basicConfig(
 
 def is_user_allowed(user_id: int) -> bool:
     """Check if a user is allowed to use the bot."""
+    if "all" in ALLOWED_USERS_RAW:
+        return True
     return user_id in ALLOWED_USERS 

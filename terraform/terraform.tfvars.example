@@ -2,5 +2,5 @@ cloud_id            = "your-cloud-id"
 folder_id           = "your-folder-id"
 zone                = "ru-central1-a"
 telegram_token      = "your-telegram-token"
-allowed_users       = "182203182"
+allowed_users       = "all" #all - бот могут использовать все, либо перечислить id пользователей через запятую
 function_package_path = "../dist/function.zip" 

@@ -18,6 +18,3 @@ MAX_STORAGE_LOCATIONS_PER_USER=100
 
 # Deployment Mode
 DEPLOYMENT_MODE=development  # development or production
-
-# Webhook Configuration (for production mode)
-WEBHOOK_URL=https://your-api-gateway-url/prod/webhook 
