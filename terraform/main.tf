@@ -62,13 +62,6 @@ resource "yandex_resourcemanager_folder_iam_member" "sa_editor" {
   member    = "serviceAccount:${yandex_iam_service_account.boxbot_sa.id}"
 }
 
-# Grant YDB editor role to the service account (read/write access)
-resource "yandex_resourcemanager_folder_iam_member" "sa_ydb_editor" {
-  folder_id = var.folder_id
-  role      = "ydb.editor"
-  member    = "serviceAccount:${yandex_iam_service_account.boxbot_sa.id}"
-}
-
 # Create static access key for service account
 resource "yandex_iam_service_account_static_access_key" "sa_static_key" {
   service_account_id = yandex_iam_service_account.boxbot_sa.id
@@ -85,6 +78,15 @@ resource "yandex_ydb_database_serverless" "boxbot-db" {
     enable_throttling_rcu_limit = false
     storage_size_limit          = 1
   }
+}
+
+# Grant YDB editor role to the service account for the specific database
+resource "yandex_ydb_database_iam_binding" "sa_ydb_editor_binding" {
+  database_id = yandex_ydb_database_serverless.boxbot-db.id
+  role        = "ydb.editor"
+  members = [
+    "serviceAccount:${yandex_iam_service_account.boxbot_sa.id}"
+  ]
 }
 
 # Create Cloud Function (Lambda replacement)
